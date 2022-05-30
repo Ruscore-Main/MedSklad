@@ -1,0 +1,425 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DataBaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="DataBaseModelStoreContainer">
+    <EntitySet Name="ProductSet" EntityType="DataBaseModel.Store.ProductSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StorageSet" EntityType="DataBaseModel.Store.StorageSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EmployeeSet" EntityType="DataBaseModel.Store.EmployeeSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CustomerSet" EntityType="DataBaseModel.Store.CustomerSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="NacladnayaSet" EntityType="DataBaseModel.Store.NacladnayaSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="NacladnayaItemSet" EntityType="DataBaseModel.Store.NacladnayaItemSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ProductStorage" Association="DataBaseModel.Store.ProductStorage">
+      <End Role="Product" EntitySet="ProductSet" />
+      <End Role="Storage" EntitySet="StorageSet" />
+    </AssociationSet>
+    <AssociationSet Name="NacladnayaNacladnayaItem" Association="DataBaseModel.Store.NacladnayaNacladnayaItem">
+      <End Role="Nacladnaya" EntitySet="NacladnayaSet" />
+      <End Role="NacladnayaItem" EntitySet="NacladnayaItemSet" />
+    </AssociationSet>
+    <AssociationSet Name="ProductNacladnayaItem" Association="DataBaseModel.Store.ProductNacladnayaItem">
+      <End Role="Product" EntitySet="ProductSet" />
+      <End Role="NacladnayaItem" EntitySet="NacladnayaItemSet" />
+    </AssociationSet>
+    <AssociationSet Name="EmployeeNacladnaya" Association="DataBaseModel.Store.EmployeeNacladnaya">
+      <End Role="Employee" EntitySet="EmployeeSet" />
+      <End Role="Nacladnaya" EntitySet="NacladnayaSet" />
+    </AssociationSet>
+    <AssociationSet Name="NacladnayaCustomer" Association="DataBaseModel.Store.NacladnayaCustomer">
+      <End Role="Nacladnaya" EntitySet="NacladnayaSet" />
+      <End Role="Customer" EntitySet="CustomerSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ProductSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Price" Type="int" Nullable="false" />
+    <Property Name="ProductWeigth" Type="int" Nullable="false" />
+    <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Manufacturer" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ExpirationDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StoragePlace" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Amount" Type="int" Nullable="false" />
+    <Property Name="Storage_Id" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="StorageSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Capacity" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmployeeSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Patronymic" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Post" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CustomerSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Patronymic" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Nacladnaya_Id" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="NacladnayaSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderDate" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Sum" Type="int" Nullable="true" />
+    <Property Name="EmployeeId" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="NacladnayaItemSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Amount" Type="int" Nullable="false" />
+    <Property Name="NacladnayaId" Type="int" Nullable="true" />
+    <Property Name="ProductId" Type="int" Nullable="true" />
+  </EntityType>
+  <Association Name="ProductStorage">
+    <End Role="Product" Type="DataBaseModel.Store.ProductSet" Multiplicity="*" />
+    <End Role="Storage" Type="DataBaseModel.Store.StorageSet" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Storage">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="Storage_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="NacladnayaNacladnayaItem">
+    <End Role="Nacladnaya" Type="DataBaseModel.Store.NacladnayaSet" Multiplicity="0..1" />
+    <End Role="NacladnayaItem" Type="DataBaseModel.Store.NacladnayaItemSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nacladnaya">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NacladnayaItem">
+        <PropertyRef Name="NacladnayaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductNacladnayaItem">
+    <End Role="Product" Type="DataBaseModel.Store.ProductSet" Multiplicity="0..1" />
+    <End Role="NacladnayaItem" Type="DataBaseModel.Store.NacladnayaItemSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NacladnayaItem">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EmployeeNacladnaya">
+    <End Role="Employee" Type="DataBaseModel.Store.EmployeeSet" Multiplicity="0..1" />
+    <End Role="Nacladnaya" Type="DataBaseModel.Store.NacladnayaSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Nacladnaya">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="NacladnayaCustomer">
+    <End Role="Nacladnaya" Type="DataBaseModel.Store.NacladnayaSet" Multiplicity="0..1" />
+    <End Role="Customer" Type="DataBaseModel.Store.CustomerSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nacladnaya">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="Nacladnaya_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DataBaseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="DataBaseModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ProductSet" EntityType="DataBaseModel.Product" />
+          <EntitySet Name="StorageSet" EntityType="DataBaseModel.Storage" />
+          <AssociationSet Name="ProductStorage" Association="DataBaseModel.ProductStorage">
+            <End Role="Product" EntitySet="ProductSet" />
+            <End Role="Storage" EntitySet="StorageSet" />
+          </AssociationSet>
+          <EntitySet Name="EmployeeSet" EntityType="DataBaseModel.Employee" />
+          <EntitySet Name="CustomerSet" EntityType="DataBaseModel.Customer" />
+          <EntitySet Name="NacladnayaSet" EntityType="DataBaseModel.Nacladnaya" />
+          <EntitySet Name="NacladnayaItemSet" EntityType="DataBaseModel.NacladnayaItem" />
+          <AssociationSet Name="NacladnayaNacladnayaItem" Association="DataBaseModel.NacladnayaNacladnayaItem">
+            <End Role="Nacladnaya" EntitySet="NacladnayaSet" />
+            <End Role="NacladnayaItem" EntitySet="NacladnayaItemSet" />
+          </AssociationSet>
+          <AssociationSet Name="ProductNacladnayaItem" Association="DataBaseModel.ProductNacladnayaItem">
+            <End Role="Product" EntitySet="ProductSet" />
+            <End Role="NacladnayaItem" EntitySet="NacladnayaItemSet" />
+          </AssociationSet>
+          <AssociationSet Name="EmployeeNacladnaya" Association="DataBaseModel.EmployeeNacladnaya">
+            <End Role="Employee" EntitySet="EmployeeSet" />
+            <End Role="Nacladnaya" EntitySet="NacladnayaSet" />
+          </AssociationSet>
+          <AssociationSet Name="NacladnayaCustomer" Association="DataBaseModel.NacladnayaCustomer">
+            <End Role="Nacladnaya" EntitySet="NacladnayaSet" />
+            <End Role="Customer" EntitySet="CustomerSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="ProductWeigth" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" Nullable="false" />
+          <Property Name="Manufacturer" Type="String" Nullable="false" />
+          <Property Name="ExpirationDate" Type="String" Nullable="false" />
+          <Property Name="StoragePlace" Type="String" Nullable="false" />
+          <NavigationProperty Name="Storage" Relationship="DataBaseModel.ProductStorage" FromRole="Product" ToRole="Storage" />
+          <NavigationProperty Name="NacladnayaItem" Relationship="DataBaseModel.ProductNacladnayaItem" FromRole="Product" ToRole="NacladnayaItem" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Storage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Capacity" Type="String" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="DataBaseModel.ProductStorage" FromRole="Storage" ToRole="Product" />
+        </EntityType>
+        <Association Name="ProductStorage">
+          <End Type="DataBaseModel.Product" Role="Product" Multiplicity="*" />
+          <End Type="DataBaseModel.Storage" Role="Storage" Multiplicity="0..1" />
+        </Association>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Surname" Type="String" Nullable="false" />
+          <Property Name="Patronymic" Type="String" Nullable="false" />
+          <Property Name="Post" Type="String" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" />
+          <NavigationProperty Name="Nacladnaya" Relationship="DataBaseModel.EmployeeNacladnaya" FromRole="Employee" ToRole="Nacladnaya" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Surname" Type="String" Nullable="false" />
+          <Property Name="Patronymic" Type="String" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" />
+          <NavigationProperty Name="Nacladnaya" Relationship="DataBaseModel.NacladnayaCustomer" FromRole="Customer" ToRole="Nacladnaya" />
+        </EntityType>
+        <EntityType Name="Nacladnaya">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderDate" Type="String" Nullable="true" />
+          <Property Name="Sum" Type="Int32" Nullable="true" />
+          <NavigationProperty Name="NacladnayaItem" Relationship="DataBaseModel.NacladnayaNacladnayaItem" FromRole="Nacladnaya" ToRole="NacladnayaItem" />
+          <NavigationProperty Name="Employee" Relationship="DataBaseModel.EmployeeNacladnaya" FromRole="Nacladnaya" ToRole="Employee" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="true" />
+          <NavigationProperty Name="Customer" Relationship="DataBaseModel.NacladnayaCustomer" FromRole="Nacladnaya" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="NacladnayaItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Nacladnaya" Relationship="DataBaseModel.NacladnayaNacladnayaItem" FromRole="NacladnayaItem" ToRole="Nacladnaya" />
+          <Property Name="NacladnayaId" Type="Int32" Nullable="true" />
+          <NavigationProperty Name="Product" Relationship="DataBaseModel.ProductNacladnayaItem" FromRole="NacladnayaItem" ToRole="Product" />
+          <Property Name="ProductId" Type="Int32" Nullable="true" />
+          </EntityType>
+        <Association Name="NacladnayaNacladnayaItem">
+          <End Type="DataBaseModel.Nacladnaya" Role="Nacladnaya" Multiplicity="0..1" />
+          <End Type="DataBaseModel.NacladnayaItem" Role="NacladnayaItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nacladnaya">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NacladnayaItem">
+              <PropertyRef Name="NacladnayaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductNacladnayaItem">
+          <End Type="DataBaseModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="DataBaseModel.NacladnayaItem" Role="NacladnayaItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NacladnayaItem">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmployeeNacladnaya">
+          <End Type="DataBaseModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="DataBaseModel.Nacladnaya" Role="Nacladnaya" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Nacladnaya">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="NacladnayaCustomer">
+          <End Type="DataBaseModel.Nacladnaya" Role="Nacladnaya" Multiplicity="0..1" />
+          <End Type="DataBaseModel.Customer" Role="Customer" Multiplicity="0..1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DataBaseModelStoreContainer" CdmEntityContainer="DataBaseModelContainer">
+    <EntitySetMapping Name="ProductSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataBaseModel.Product)">
+        <MappingFragment StoreEntitySet="ProductSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="ProductWeigth" ColumnName="ProductWeigth" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+          <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+          <ScalarProperty Name="StoragePlace" ColumnName="StoragePlace" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StorageSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataBaseModel.Storage)">
+        <MappingFragment StoreEntitySet="StorageSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeeSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataBaseModel.Employee)">
+        <MappingFragment StoreEntitySet="EmployeeSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+          <ScalarProperty Name="Post" ColumnName="Post" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataBaseModel.Customer)">
+        <MappingFragment StoreEntitySet="CustomerSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NacladnayaSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataBaseModel.Nacladnaya)">
+        <MappingFragment StoreEntitySet="NacladnayaSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="Sum" ColumnName="Sum" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NacladnayaItemSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataBaseModel.NacladnayaItem)">
+        <MappingFragment StoreEntitySet="NacladnayaItemSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="NacladnayaId" ColumnName="NacladnayaId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ProductStorage" TypeName="DataBaseModel.ProductStorage" StoreEntitySet="ProductSet">
+      <EndProperty Name="Storage">
+        <ScalarProperty Name="Id" ColumnName="Storage_Id" />
+      </EndProperty>
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="Storage_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="NacladnayaCustomer" TypeName="DataBaseModel.NacladnayaCustomer" StoreEntitySet="CustomerSet">
+      <EndProperty Name="Nacladnaya">
+        <ScalarProperty Name="Id" ColumnName="Nacladnaya_Id" />
+      </EndProperty>
+      <EndProperty Name="Customer">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="Nacladnaya_Id" IsNull="false" />
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

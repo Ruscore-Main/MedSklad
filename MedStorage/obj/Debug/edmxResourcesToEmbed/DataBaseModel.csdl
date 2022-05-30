@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DataBaseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="DataBaseModelContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ProductSet" EntityType="DataBaseModel.Product" />
+    <EntitySet Name="StorageSet" EntityType="DataBaseModel.Storage" />
+    <AssociationSet Name="ProductStorage" Association="DataBaseModel.ProductStorage">
+      <End Role="Product" EntitySet="ProductSet" />
+      <End Role="Storage" EntitySet="StorageSet" />
+    </AssociationSet>
+    <EntitySet Name="EmployeeSet" EntityType="DataBaseModel.Employee" />
+    <EntitySet Name="CustomerSet" EntityType="DataBaseModel.Customer" />
+    <EntitySet Name="NacladnayaSet" EntityType="DataBaseModel.Nacladnaya" />
+    <EntitySet Name="NacladnayaItemSet" EntityType="DataBaseModel.NacladnayaItem" />
+    <AssociationSet Name="NacladnayaNacladnayaItem" Association="DataBaseModel.NacladnayaNacladnayaItem">
+      <End Role="Nacladnaya" EntitySet="NacladnayaSet" />
+      <End Role="NacladnayaItem" EntitySet="NacladnayaItemSet" />
+    </AssociationSet>
+    <AssociationSet Name="ProductNacladnayaItem" Association="DataBaseModel.ProductNacladnayaItem">
+      <End Role="Product" EntitySet="ProductSet" />
+      <End Role="NacladnayaItem" EntitySet="NacladnayaItemSet" />
+    </AssociationSet>
+    <AssociationSet Name="EmployeeNacladnaya" Association="DataBaseModel.EmployeeNacladnaya">
+      <End Role="Employee" EntitySet="EmployeeSet" />
+      <End Role="Nacladnaya" EntitySet="NacladnayaSet" />
+    </AssociationSet>
+    <AssociationSet Name="NacladnayaCustomer" Association="DataBaseModel.NacladnayaCustomer">
+      <End Role="Nacladnaya" EntitySet="NacladnayaSet" />
+      <End Role="Customer" EntitySet="CustomerSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="ProductWeigth" Type="Int32" Nullable="false" />
+    <Property Name="Type" Type="String" Nullable="false" />
+    <Property Name="Manufacturer" Type="String" Nullable="false" />
+    <Property Name="ExpirationDate" Type="String" Nullable="false" />
+    <Property Name="StoragePlace" Type="String" Nullable="false" />
+    <NavigationProperty Name="Storage" Relationship="DataBaseModel.ProductStorage" FromRole="Product" ToRole="Storage" />
+    <NavigationProperty Name="NacladnayaItem" Relationship="DataBaseModel.ProductNacladnayaItem" FromRole="Product" ToRole="NacladnayaItem" />
+    <Property Name="Amount" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Storage">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Capacity" Type="String" Nullable="false" />
+    <Property Name="Address" Type="String" Nullable="false" />
+    <NavigationProperty Name="Products" Relationship="DataBaseModel.ProductStorage" FromRole="Storage" ToRole="Product" />
+  </EntityType>
+  <Association Name="ProductStorage">
+    <End Type="DataBaseModel.Product" Role="Product" Multiplicity="*" />
+    <End Type="DataBaseModel.Storage" Role="Storage" Multiplicity="0..1" />
+  </Association>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="Surname" Type="String" Nullable="false" />
+    <Property Name="Patronymic" Type="String" Nullable="false" />
+    <Property Name="Post" Type="String" Nullable="false" />
+    <Property Name="Password" Type="String" Nullable="false" />
+    <NavigationProperty Name="Nacladnaya" Relationship="DataBaseModel.EmployeeNacladnaya" FromRole="Employee" ToRole="Nacladnaya" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="Surname" Type="String" Nullable="false" />
+    <Property Name="Patronymic" Type="String" Nullable="false" />
+    <Property Name="Address" Type="String" Nullable="false" />
+    <Property Name="PhoneNumber" Type="String" Nullable="false" />
+    <Property Name="Password" Type="String" Nullable="false" />
+    <NavigationProperty Name="Nacladnaya" Relationship="DataBaseModel.NacladnayaCustomer" FromRole="Customer" ToRole="Nacladnaya" />
+  </EntityType>
+  <EntityType Name="Nacladnaya">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderDate" Type="String" Nullable="true" />
+    <Property Name="Sum" Type="Int32" Nullable="true" />
+    <NavigationProperty Name="NacladnayaItem" Relationship="DataBaseModel.NacladnayaNacladnayaItem" FromRole="Nacladnaya" ToRole="NacladnayaItem" />
+    <NavigationProperty Name="Employee" Relationship="DataBaseModel.EmployeeNacladnaya" FromRole="Nacladnaya" ToRole="Employee" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="true" />
+    <NavigationProperty Name="Customer" Relationship="DataBaseModel.NacladnayaCustomer" FromRole="Nacladnaya" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="NacladnayaItem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Amount" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Nacladnaya" Relationship="DataBaseModel.NacladnayaNacladnayaItem" FromRole="NacladnayaItem" ToRole="Nacladnaya" />
+    <Property Name="NacladnayaId" Type="Int32" Nullable="true" />
+    <NavigationProperty Name="Product" Relationship="DataBaseModel.ProductNacladnayaItem" FromRole="NacladnayaItem" ToRole="Product" />
+    <Property Name="ProductId" Type="Int32" Nullable="true" />
+  </EntityType>
+  <Association Name="NacladnayaNacladnayaItem">
+    <End Type="DataBaseModel.Nacladnaya" Role="Nacladnaya" Multiplicity="0..1" />
+    <End Type="DataBaseModel.NacladnayaItem" Role="NacladnayaItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nacladnaya">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NacladnayaItem">
+        <PropertyRef Name="NacladnayaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductNacladnayaItem">
+    <End Type="DataBaseModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="DataBaseModel.NacladnayaItem" Role="NacladnayaItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NacladnayaItem">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EmployeeNacladnaya">
+    <End Type="DataBaseModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="DataBaseModel.Nacladnaya" Role="Nacladnaya" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Nacladnaya">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="NacladnayaCustomer">
+    <End Type="DataBaseModel.Nacladnaya" Role="Nacladnaya" Multiplicity="0..1" />
+    <End Type="DataBaseModel.Customer" Role="Customer" Multiplicity="0..1" />
+  </Association>
+</Schema>
