@@ -49,6 +49,7 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBox1
@@ -255,11 +256,23 @@
             this.label11.TabIndex = 74;
             this.label11.Text = "Количество:";
             // 
+            // button4
+            // 
+            this.button4.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button4.Location = new System.Drawing.Point(32, 452);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(363, 40);
+            this.button4.TabIndex = 76;
+            this.button4.Text = "Сформировать отчет";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(682, 462);
+            this.ClientSize = new System.Drawing.Size(682, 511);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.textBox8);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.linkLabel1);
@@ -313,5 +326,6 @@
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button button4;
     }
 }

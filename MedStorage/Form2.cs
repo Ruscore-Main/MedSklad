@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Xceed.Document.NET;
+using Xceed.Words.NET;
 
 namespace MedStorage
 {
@@ -14,6 +17,7 @@ namespace MedStorage
     {
         private DataBaseModelContainer _db;
         Product currentProduct;
+        public string printContent = "";
         public Form2(DataBaseModelContainer db = null)
         {
             InitializeComponent();
@@ -186,10 +190,72 @@ namespace MedStorage
 
         }
 
-        
+        private void PrintPageHandler(object sender, PrintPageEventArgs e)
+        {
+            e.Graphics.DrawString(printContent, new System.Drawing.Font("Arial", 16), Brushes.Black, 0, 0);
+        }
 
-        
+        private DocX outputDoc()
+        {
+            string pathDocument = "otchet.docx";
+            DocX document = DocX.Create(pathDocument);
+            document.MarginLeft = 60.0f;
+            document.MarginRight = 60.0f;
+            document.MarginTop = 60.0f;
+            document.MarginBottom = 60.0f;
 
-        
+            document.InsertParagraph("Отчет: Оставшиеся товары на складе\n").Bold().Font("Times New Roman").FontSize(16);
+            document.InsertParagraph("").FontSize(16);
+            document.InsertParagraph("").FontSize(16);
+
+            Table table = document.AddTable(_db.ProductSet.Count() + 1, 4);
+            table.Alignment = Alignment.center;
+            table.Design = TableDesign.TableGrid;
+
+            table.Rows[0].Cells[0].Paragraphs[0].Append("Название").Font("Times New Roman").FontSize(12).Bold();
+            table.Rows[0].Cells[1].Paragraphs[0].Append("Кол-во").Font("Times New Roman").FontSize(12).Bold();
+            table.Rows[0].Cells[2].Paragraphs[0].Append("Тип").Font("Times New Roman").FontSize(12).Bold();
+            table.Rows[0].Cells[3].Paragraphs[0].Append("Цена").Font("Times New Roman").FontSize(12).Bold();
+
+
+            int row = 1;
+            foreach (Product product in _db.ProductSet)
+            {
+                table.Rows[row].Cells[0].Paragraphs[0].Append(product.Name).Font("Times New Roman").FontSize(12);
+
+                table.Rows[row].Cells[1].Paragraphs[0].Append($"{product.Amount}").Font("Times New Roman").FontSize(12);
+
+                table.Rows[row].Cells[2].Paragraphs[0].Append(product.Type).Font("Times New Roman").FontSize(12);
+
+                table.Rows[row].Cells[3].Paragraphs[0].Append($"{product.Price}").Font("Times New Roman").FontSize(12);
+
+                row++;
+            }
+
+            table.AutoFit = AutoFit.Contents;
+
+
+            document.InsertParagraph().InsertTableAfterSelf(table);
+
+            document.Save();
+
+            return document;
+
+        }
+
+        private void button4_Click(object sender, EventArgs e) // печать отчета
+        {
+            DocX docs = outputDoc();
+
+            printContent = docs.Text;
+            PrintDocument printDocument = new PrintDocument();
+            PrintDialog printDialog = new PrintDialog();
+            printDocument.PrintPage += PrintPageHandler;
+            printDialog.Document = printDocument;
+            if (printDialog.ShowDialog() == DialogResult.OK)
+            {
+                printDialog.Document.Print();
+            }
+        }
     }
 }

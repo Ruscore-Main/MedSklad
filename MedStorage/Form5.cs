@@ -177,7 +177,7 @@ namespace MedStorage
             table.Alignment = Alignment.center;
             table.Design = TableDesign.TableGrid;
 
-            table.Rows[0].Cells[0].Paragraphs[0].Append("Название товар").Font("Times New Roman").FontSize(12).Bold();
+            table.Rows[0].Cells[0].Paragraphs[0].Append("Название").Font("Times New Roman").FontSize(12).Bold();
             table.Rows[0].Cells[1].Paragraphs[0].Append("Кол-во").Font("Times New Roman").FontSize(12).Bold();
             table.Rows[0].Cells[2].Paragraphs[0].Append("Вид").Font("Times New Roman").FontSize(12).Bold();
             table.Rows[0].Cells[3].Paragraphs[0].Append("Производитель").Font("Times New Roman").FontSize(12).Bold();
@@ -197,6 +197,7 @@ namespace MedStorage
                 table.Rows[row].Cells[3].Paragraphs[0].Append(product.Manufacturer).Font("Times New Roman").FontSize(12);
 
                 table.Rows[row].Cells[4].Paragraphs[0].Append($"{product.Price * item.Amount}").Font("Times New Roman").FontSize(12);
+                row++;
             }
 
             table.AutoFit = AutoFit.Contents;
